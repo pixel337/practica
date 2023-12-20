@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Определение значения HTML тега</title>
+  <style>
+    #tagDescription {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <input type="text" id="tagInput" placeholder="Введите имя тега и нажмите Enter">
+  <p id="tagDescription"></p>
+
+  <script>
+    const tagDescriptions = {
+      'a': 'Тег <a> предназначен для создания ссылок.',
+      'p': 'Тег <p> предназначен для разделения текста на абзацы.',
+      'img': 'Тег <img> используется для вставки изображений.',
+    };
+
+    const tagInput = document.getElementById('tagInput');
+    const tagDescription = document.getElementById('tagDescription');
+
+    tagInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        const tagName = tagInput.value.toLowerCase();
+        const description = tagDescriptions[tagName];
+
+        if (description) {
+          tagDescription.textContent = description;
+        } else {
+          tagDescription.textContent = 'Такого тега не существует.';
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

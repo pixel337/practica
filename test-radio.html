@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+  <div id="test">
+    <div>
+      <p>вопрос 1?</p>
+      
+      <label>
+        <input type="radio" 
+          name="1" 
+          data-index="0"> 
+        вариант 1
+      </label>
+      <label>
+        <input type="radio" 
+          name="1" 
+          data-index="1"> 
+        вариант 2
+      </label>
+      <label>
+        <input type="radio" 
+          name="1" 
+          data-index="2"> 
+        вариант 3
+      </label>
+    </div>
+    <div>
+      <p>вопрос 2?</p>
+      
+      <label>
+        <input type="radio" 
+          name="2" 
+          data-index="0"> 
+        вариант 1
+      </label>
+      <label>
+        <input type="radio" 
+          name="2" 
+          data-index="1"> 
+        вариант 2
+      </label>
+      <label>
+        <input type="radio" 
+          name="2" 
+          data-index="2"> 
+        вариант 3
+      </label>
+    </div>
+    <div>
+      <p>вопрос 3?</p>
+      
+      <label>
+        <input type="radio" 
+          name="3" 
+          data-index="0"> 
+        вариант 1
+      </label>
+      <label>
+        <input type="radio" 
+          name="3" 
+          data-index="1"> 
+        вариант 2
+      </label>
+      <label>
+        <input type="radio" 
+          name="3" 
+          data-index="2"> 
+        вариант 3
+      </label>
+    </div>
+  </div>
+  <br>
+  <button id="button" onclick="checkAnswers()">проверить ответы</button>
+
+  <script>
+    function checkAnswers() {
+      const labels = document.querySelectorAll('#test label');
+
+      labels.forEach(label => {
+        const input = label.querySelector('input');
+        const isChecked = input.checked;
+        const index = parseInt(input.getAttribute('data-index'));
+        const isRight = index === answers[parseInt(input.name) - 1];
+        
+        if (isChecked) {
+          if (isRight) {
+            label.style.color = 'green';
+          } else {
+            label.style.color = 'red';
+          }
+        }
+      });
+    }
+
+    const answers = [0, 1, 2];
+  </script>
+</body>
+</html>

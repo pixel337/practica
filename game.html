@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Города</title>
+</head>
+<body>
+
+  <label for="cityInput">Введите город:</label>
+  <input type="text" id="cityInput" onkeydown="handleKeyDown(event)">
+  <div id="output"></div>
+
+  <script>
+    let cities = [];
+
+    function handleKeyDown(event) {
+      if (event.key === 'Enter') {
+        const inputElement = document.getElementById('cityInput');
+        const cityName = inputElement.value.trim();
+
+        if (isValidMove(cityName)) {
+          cities.push(cityName);
+          inputElement.value = '';
+          outputCities();
+        } else {
+          alert('Некорректный ход. Попробуйте еще раз.');
+        }
+      }
+    }
+
+    function isValidMove(city) {
+      if (cities.length === 0) {
+        return true; 
+      }
+
+      const lastCity = cities[cities.length - 1].toLowerCase();
+      const firstLetter = lastCity[lastCity.length - 1].toLowerCase();
+
+      return city.toLowerCase().startsWith(firstLetter) && !cities.includes(city);
+    }
+
+    function outputCities() {
+      const outputElement = document.getElementById('output');
+      outputElement.textContent = 'Города: ' + cities.join(', ');
+    }
+  </script>
+
+    <p>Игрок против робота:</p>
+    <label for="robotCityInput">Введите город:</label>
+    <input type="text" id="robotCityInput" onkeydown="handleRobotMove(event)">
+
+    <script>
+    let allCities = ['Москва', 'Санкт-Петербург', 'Нью-Йорк', 'Лондон', 'Париж']; 
+    let robotCities = [];
+    let currentPlayer = 'human';
+
+    function handleRobotMove(event) {
+        if (event.key === 'Enter' && currentPlayer === 'human') {
+        const inputElement = document.getElementById('robotCityInput');
+        const cityName = inputElement.value.trim();
+
+        if (isValidMove(cityName)) {
+            cities.push(cityName);
+            inputElement.value = '';
+            outputCities();
+
+            currentPlayer = 'robot';
+            setTimeout(robotMove, 1000); 
+        } else {
+            alert('Некорректный ход. Попробуйте еще раз.');
+        }
+        }
+    }
+
+    function robotMove() {
+        const validCities = allCities.filter(city => !robotCities.includes(city) && isValidMove(city));
+        if (validCities.length > 0) {
+        const randomIndex = Math.floor(Math.random() * validCities.length);
+        const robotCity = validCities[randomIndex];
+        robotCities.push(robotCity);
+        outputCities();
+
+        currentPlayer = 'human';
+        } else {
+        alert('Робот не может сделать ход. Игра завершена.');
+        }
+    }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

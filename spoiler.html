@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Спойлеры</title>
+  <style>
+    .spoiler:not(.active) {
+      display: none;
+    }
+
+    .toggle {
+      cursor: pointer;
+      color: blue;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <p>Абзац с текстом</p>
+
+  <p>
+    Абзац с текстом
+    <a href="#" class="toggle" onclick="toggleSpoiler(event, 'spoiler1')">
+      Развернуть спойлер 1
+    </a>
+  </p>
+
+  <p class="spoiler" id="spoiler1">
+    Скрытый спойлер 1
+  </p>
+
+  <p>Абзац с текстом</p>
+
+  <p>
+    Абзац с текстом
+    <a href="#" class="toggle" onclick="toggleSpoiler(event, 'spoiler2')">
+      Развернуть спойлер 2
+    </a>
+  </p>
+
+  <p class="spoiler" id="spoiler2">
+    Скрытый спойлер 2
+  </p>
+
+  <p>Абзац с текстом</p>
+
+  <script>
+    function toggleSpoiler(event, spoilerId) {
+      event.preventDefault();
+      const spoiler = document.getElementById(spoilerId);
+      spoiler.classList.toggle('active');
+    }
+  </script>
+
+</body>
+</html>

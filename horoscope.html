@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Гороскоп</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    #container {
+      margin: 0 auto;
+      width: 600px;
+      text-align: center;
+    }
+
+    #input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+
+    #radioGroup {
+      margin-bottom: 10px;
+    }
+
+    #horoscope {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <input type="date" id="input" placeholder="Выберите дату рождения">
+    <div id="radioGroup">
+      <input type="radio" name="day" id="today" checked>
+      <label for="today">Сегодня</label>
+
+      <input type="radio" name="day" id="tomorrow">
+      <label for="tomorrow">Завтра</label>
+
+      <input type="radio" name="day" id="dayAfterTomorrow">
+      <label for="dayAfterTomorrow">Послезавтра</label>
+    </div>
+    <div id="horoscope"></div>
+  </div>
+
+  <script>
+    const horoscopes = {
+      'aries': {
+        today: 'Сегодня будет успешный день для ваших начинаний.',
+        tomorrow: 'Завтра лучше посвятить времени отдыху и развлечениям.',
+        dayAfterTomorrow: 'Послезавтра возможны неожиданные встречи и приятные сюрпризы.'
+      },
+      'taurus': {
+        today: 'Сегодня стоит проявить настойчивость в достижении целей.',
+        tomorrow: 'Завтра день подходит для планов и стратегических решений.',
+        dayAfterTomorrow: 'Послезавтра уделите внимание своему здоровью.'
+      },
+    };
+
+    const input = document.getElementById('input');
+    const todayRadio = document.getElementById('today');
+    const tomorrowRadio = document.getElementById('tomorrow');
+    const dayAfterTomorrowRadio = document.getElementById('dayAfterTomorrow');
+    const horoscopeDiv = document.getElementById('horoscope');
+
+    input.addEventListener('change', showHoroscope);
+    todayRadio.addEventListener('change', showHoroscope);
+    tomorrowRadio.addEventListener('change', showHoroscope);
+    dayAfterTomorrowRadio.addEventListener('change', showHoroscope);
+
+    function showHoroscope() {
+      const selectedDate = new Date(input.value);
+      const selectedSign = determineZodiacSign(selectedDate);
+      const selectedDay = getSelectedDay();
+
+      if (selectedSign && selectedDay) {
+        const selectedHoroscope = horoscopes[selectedSign][selectedDay];
+        horoscopeDiv.textContent = selectedHoroscope || 'Гороскоп отсутствует.';
+      } else {
+        horoscopeDiv.textContent = 'Выберите дату рождения и день.';
+      }
+    }
+
+
+    function getSelectedDay() {
+      if (todayRadio.checked) return 'today';
+      if (tomorrowRadio.checked) return 'tomorrow';
+      if (dayAfterTomorrowRadio.checked) return 'dayAfterTomorrow';
+      return null;
+    }
+  </script>
+</body>
+</html>

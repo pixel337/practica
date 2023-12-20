@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сайт предсказаний</title>
+  <style>
+    #parent {
+      text-align: center;
+    }
+
+    #parent > * {
+      margin-bottom: 10px;
+    }
+
+    #timer {
+      font-size: 18px;
+    }
+
+    #text {
+      font-size: 17px;
+      font-style: italic;
+      color: green; 
+    }
+
+    #text.bad {
+      color: red; 
+    }
+
+    button {
+      padding: 5px 10px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:not(.active) {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="parent">
+    <div id="timer">?</div>
+    <div id="text"></div>
+    <button id="start" class="active">Узнать свою судьбу</button>
+    <button id="stop" onclick="stopPrediction()">Получить предсказание</button>
+  </div>
+
+  <script>
+    const predictions = [
+      { text: 'Сегодня тебя ждет удача!', type: 'good' },
+      { text: 'Будь осторожен, возможны неприятности.', type: 'bad' },
+      { text: 'Тебя ждет приятное событие!', type: 'good' },
+      { text: 'Ожидай трудности, но справишься!', type: 'bad' },
+      { text: 'Ждут интересные знакомства.', type: 'good' },
+      { text: 'Будь внимателен к окружающим.', type: 'bad' },
+    ];
+
+    let timerInterval;
+
+    document.getElementById('start').addEventListener('click', startTimer);
+
+    function startTimer() {
+      let seconds = 0;
+      timerInterval = setInterval(() => {
+        document.getElementById('timer').textContent = seconds.toFixed(1);
+        seconds += 0.1;
+      }, 100);
+      document.getElementById('start').classList.remove('active');
+      document.getElementById('stop').classList.add('active');
+    }
+
+    function stopPrediction() {
+      clearInterval(timerInterval);
+      const randomIndex = Math.floor(Math.random() * predictions.length);
+      const selectedPrediction = predictions[randomIndex];
+      const textDiv = document.getElementById('text');
+      textDiv.textContent = selectedPrediction.text;
+      textDiv.classList.toggle('bad', selectedPrediction.type === 'bad');
+      document.getElementById('stop').classList.remove('active');
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .right {
+      border: 1px solid green;
+    }
+    .wrong {
+      border: 1px solid red;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="test"></div>
+  <br>
+  <button id="button" onclick="checkAnswers()">проверить ответы</button>
+
+  <script>
+    const questions = ['вопрос 1?', 'вопрос 2?', 'вопрос 3?'];
+    const answers = ['ответ 1', 'ответ 2', 'ответ 3'];
+
+    const testDiv = document.getElementById('test');
+
+    questions.forEach((question, index) => {
+      const div = document.createElement('div');
+      div.innerHTML = `<p>${question}</p><input>`;
+      testDiv.appendChild(div);
+    });
+
+    function checkAnswers() {
+      const inputs = document.querySelectorAll('#test input');
+
+      inputs.forEach((input, index) => {
+        const userAnswer = input.value.trim().toLowerCase();
+        const correctAnswer = answers[index].toLowerCase();
+
+        if (userAnswer === correctAnswer) {
+          input.classList.add('right');
+          input.classList.remove('wrong');
+        } else {
+          input.classList.add('wrong');
+          input.classList.remove('right');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

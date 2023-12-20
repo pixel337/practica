@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Автодополнение</title>
+  <style>
+    #parent {
+      position: relative;
+    }
+
+    #elem {
+      padding: 5px;
+      font-size: 18px;
+    }
+
+    #parent ul {
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      background-color: white;
+      display: none;
+      border: 1px solid gray;
+    }
+
+    #parent li {
+      font-size: 18px;
+      padding: 5px;
+    }
+
+    #parent li:hover {
+      background-color: #f2f2f2;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="parent">
+    <input id="elem">
+    <ul id="list"></ul>
+  </div>
+
+  <script>
+    let countries = ['Belarus', 'Belgium', 'Bulgaria'];
+
+    const inputElem = document.getElementById('elem');
+    const listElem = document.getElementById('list');
+
+    inputElem.addEventListener('input', handleInput);
+
+    function handleInput() {
+      const inputValue = inputElem.value.toLowerCase();
+      const filteredCountries = countries.filter(country => country.toLowerCase().startsWith(inputValue));
+      renderList(filteredCountries);
+    }
+
+    function renderList(filteredCountries) {
+      listElem.innerHTML = '';
+      filteredCountries.forEach(country => {
+        const liElem = document.createElement('li');
+        liElem.textContent = country;
+        liElem.addEventListener('click', () => {
+          inputElem.value = country;
+          listElem.style.display = 'none';
+        });
+        listElem.appendChild(liElem);
+      });
+
+      if (filteredCountries.length > 0) {
+        listElem.style.display = 'block';
+      } else {
+        listElem.style.display = 'none';
+      }
+    }
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('#parent')) {
+        listElem.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

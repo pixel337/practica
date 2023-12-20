@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>On-Screen Keyboard with Caps Lock</title>
+  <style>
+    #keyboard {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 5px;
+      margin-top: 20px;
+    }
+
+    button {
+      width: 30px;
+      height: 30px;
+      font-size: 14px;
+    }
+
+    .caps-lock {
+      background-color: lightblue;
+    }
+  </style>
+</head>
+<body>
+
+  <input type="text" id="textInput" readonly>
+  <div id="keyboard"></div>
+
+  <script>
+    const keyboardLayout = [
+      ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+      ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+      ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'],
+      ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
+      ['CapsLock', ' ', 'Enter']
+    ];
+
+    const inputField = document.getElementById('textInput');
+    const keyboardContainer = document.getElementById('keyboard');
+
+    function createKeyboard() {
+      keyboardLayout.forEach(row => {
+        let rowElement = document.createElement('div');
+        rowElement.classList.add('keyboard-row');
+
+        row.forEach(key => {
+          let keyButton = document.createElement('button');
+          keyButton.textContent = key;
+          keyButton.onclick = () => handleKeyPress(key);
+          rowElement.appendChild(keyButton);
+        });
+
+        keyboardContainer.appendChild(rowElement);
+      });
+    }
+
+    function handleKeyPress(key) {
+      switch (key) {
+        case 'CapsLock':
+          toggleCapsLock();
+          break;
+        case 'Enter':
+          inputField.value += '\n';
+          break;
+        default:
+          inputField.value += isCapsLockEnabled() ? key.toUpperCase() : key.toLowerCase();
+      }
+    }
+
+    function toggleCapsLock() {
+      capsLockEnabled = !capsLockEnabled;
+      updateCapsLockStyle();
+    }
+
+    function isCapsLockEnabled() {
+      return capsLockEnabled;
+    }
+
+    function updateCapsLockStyle() {
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(button => {
+        if (button.textContent.length === 1 && button.textContent.toUpperCase() === button.textContent) {
+          button.classList.toggle('caps-lock', capsLockEnabled);
+        }
+      });
+    }
+
+    let capsLockEnabled = false;
+    createKeyboard();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Математические калькуляторы на JavaScript</title>
+</head>
+<body>
+    
+</body>
+</html>
+<p>1. Напишите скрипт, который будет находить корни квадратного уравнения. Для этого сделайте 3 инпута, в которые будут вводиться коэффициенты уравнения.</p>
+<br>
+<input id="a" type="number" placeholder="Введите коэффициент a">
+<input id="b" type="number" placeholder="Введите коэффициент b">
+<input id="c" type="number" placeholder="Введите коэффициент c">
+<button onclick="solveQuadratic()">Решить</button>
+<div id="result"></div>
+
+<script>
+function solveQuadratic() {
+  const a = parseFloat(document.getElementById("a").value);
+  const b = parseFloat(document.getElementById("b").value);
+  const c = parseFloat(document.getElementById("c").value);
+
+  const discriminant = b * b - 4 * a * c;
+
+  if (discriminant > 0) {
+    const x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+    const x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+    document.getElementById("result").innerHTML = `Корни: x1 = ${x1}, x2 = ${x2}`;
+  } else if (discriminant === 0) {
+    const x = -b / (2 * a);
+    document.getElementById("result").innerHTML = `У уравнения один корень: x = ${x}`;
+  } else {
+    document.getElementById("result").innerHTML = "Уравнение не имеет действительных корней.";
+  }
+}
+</script>
+
+<p>Даны 3 инпута. В них вводятся числа. Проверьте, что эти числа являются тройкой Пифагора: квадрат самого большого числа должен быть равен сумме квадратов двух остальных.</p>
+<br>
+<input id="num1" type="number" placeholder="Введите число 1">
+<input id="num2" type="number" placeholder="Введите число 2">
+<input id="num3" type="number" placeholder="Введите число 3">
+<button onclick="checkPythagoreanTriple()">Проверить</button>
+<div id="result"></div>
+
+<script>
+function checkPythagoreanTriple() {
+  const num1 = parseFloat(document.getElementById("num1").value);
+  const num2 = parseFloat(document.getElementById("num2").value);
+  const num3 = parseFloat(document.getElementById("num3").value);
+
+  const sortedNumbers = [num1, num2, num3].sort((a, b) => b - a);
+
+  if (sortedNumbers[0] ** 2 === sortedNumbers[1] ** 2 + sortedNumbers[2] ** 2) {
+    document.getElementById("result").innerHTML = "Эти числа - тройка Пифагора.";
+  } else {
+    document.getElementById("result").innerHTML = "Эти числа не являются тройкой Пифагора.";
+  }
+}
+</script>
+
+<p>Дан инпут и кнопка. В инпут вводится число. По нажатию на кнопку выведите список делителей этого числа.</p>
+<br>
+<input id="numberInput" type="number" placeholder="Введите число">
+<button onclick="showDivisors()">Показать делители</button>
+<div id="result"></div>
+
+<script>
+function showDivisors() {
+  const number = parseInt(document.getElementById("numberInput").value);
+  const divisors = [];
+
+  for (let i = 1; i <= number; i++) {
+    if (number % i === 0) {
+      divisors.push(i);
+    }
+  }
+
+  document.getElementById("result").innerHTML = "Делители: " + divisors.join(", ");
+}
+</script>
+
+<p>Даны 2 инпута и кнопка. В инпуты вводятся числа. По нажатию на кнопку выведите список общих делителей этих двух чисел.</p>
+<br>
+<input id="num1" type="number" placeholder="Введите число 1">
+<input id="num2" type="number" placeholder="Введите число 2">
+<button onclick="showCommonDivisors()">Показать общие делители</button>
+<div id="result"></div>
+
+<script>
+function showCommonDivisors() {
+  const num1 = parseInt(document.getElementById("num1").value);
+  const num2 = parseInt(document.getElementById("num2").value);
+  const commonDivisors = [];
+
+  for (let i = 1; i <= Math.min(num1, num2); i++) {
+    if (num1 % i === 0 && num2 % i === 0) {
+      commonDivisors.push(i);
+    }
+  }
+
+  document.getElementById("result").innerHTML = "Общие делители: " + commonDivisors.join(", ");
+}
+</script>
+
+<p>Даны 2 инпута и кнопка. В инпуты вводятся числа. По нажатию на кнопку выведите наибольший общий делитель этих двух чисел.</p>
+<br>
+
+<input id="num1" type="number" placeholder="Введите число 1">
+<input id="num2" type="number" placeholder="Введите число 2">
+<button onclick="findGCD()">Найти НОД</button>
+<div id="result"></div>
+
+<script>
+function findGCD() {
+  const num1 = parseInt(document.getElementById("num1").value);
+  const num2 = parseInt(document.getElementById("num2").value);
+  const gcd = calculateGCD(num1, num2);
+  document.getElementById("result").innerHTML = `Наибольший общий делитель: ${gcd}`;
+}
+
+function calculateGCD(a, b) {
+  while (b !== 0) {
+    const temp = b;
+    b = a % b;
+    a = temp;
+  }
+  return a;
+}
+</script>
+
+<p>Даны 2 инпута и кнопка. В инпуты вводятся числа. По нажатию на кнопку выведите наименьшее число, которое делится и на одно, и на второе из введенных чисел.</p>
+<br>
+<input id="num1" type="number" placeholder="Введите число 1">
+<input id="num2" type="number" placeholder="Введите число 2">
+<button onclick="findLCM()">Найти НОК</button>
+<div id="result"></div>
+
+<script>
+function findLCM() {
+  const num1 = parseInt(document.getElementById("num1").value);
+  const num2 = parseInt(document.getElementById("num2").value);
+  const lcm = (num1 * num2) / calculateGCD(num1, num2);
+  document.getElementById("result").innerHTML = `Наименьшее общее кратное: ${lcm}`;
+}
+
+function calculateGCD(a, b) {
+  while (b !== 0) {
+    const temp = b;
+    b = a % b;
+    a = temp;
+  }
+  return a;
+}
+</script>
+

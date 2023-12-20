@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Линейный календарь</title>
+  <style>
+    ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    li {
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .current-day {
+      background-color: lightblue;
+    }
+
+    #month-info {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 18px;
+    }
+
+    #navigation {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #prev-month, #next-month {
+      margin: 0 10px;
+      cursor: pointer;
+      color: palevioletred;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navigation">
+    <span id="prev-month" onclick="showPreviousMonth()">Предыдущий месяц</span>
+    <span id="next-month" onclick="showNextMonth()">Следующий месяц</span>
+  </div>
+
+  <div id="month-info"></div>
+
+  <ul id="calendar"></ul>
+
+  <script>
+    const calendar = document.getElementById('calendar');
+    const monthInfo = document.getElementById('month-info');
+
+    function showCalendar(year, month) {
+      const firstDay = new Date(year, month, 1).getDay();
+      const lastDay = new Date(year, month + 1, 0).getDate();
+
+      for (let i = 1; i <= lastDay; i++) {
+        const listItem = document.createElement('li');
+        listItem.textContent = i;
+        listItem.onclick = () => highlightCurrentDay(listItem);
+
+        if (i === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear()) {
+          listItem.classList.add('current-day');
+        }
+
+        calendar.appendChild(listItem);
+      }
+    }
+
+    function highlightCurrentDay(selectedItem) {
+      const allItems = document.querySelectorAll('li');
+      allItems.forEach(item => item.classList.remove('current-day'));
+      selectedItem.classList.add('current-day');
+    }
+
+    function showMonthInfo(year, month) {
+      const options = { year: 'numeric', month: 'long' };
+      const dateStr = new Date(year, month).toLocaleDateString('ru-RU', options);
+      monthInfo.textContent = dateStr;
+    }
+
+    function showPreviousMonth() {
+      const currentDate = new Date();
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      showCalendar(currentDate.getFullYear(), currentDate.getMonth());
+      showMonthInfo(currentDate.getFullYear(), currentDate.getMonth());
+    }
+
+    function showNextMonth() {
+      const currentDate = new Date();
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      showCalendar(currentDate.getFullYear(), currentDate.getMonth());
+      showMonthInfo(currentDate.getFullYear(), currentDate.getMonth());
+    }
+
+    const currentDate = new Date();
+    showCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    showMonthInfo(currentDate.getFullYear(), currentDate.getMonth());
+  </script>
+
+</body>
+</html>
